@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CartContext } from "../components/Cart";
 import {
   Collapse,
   Navbar,
@@ -29,6 +30,15 @@ export default function TopMenu(props) {
           <NavItem>
             <NavLink>
               <Link to="/products">Products</Link>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink>
+              <CartContext.Consumer>
+                {({ cartItems }) => (
+                  <Link to="/products">Cart ({cartItems.length})</Link>
+                )}
+              </CartContext.Consumer>
             </NavLink>
           </NavItem>
         </Nav>

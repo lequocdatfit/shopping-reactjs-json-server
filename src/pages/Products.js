@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { CartContext } from "../components/Cart";
 
 import {
   Container,
@@ -36,25 +37,33 @@ class Products extends Component {
       <Container>
         <h1>Products</h1>
         <Row>
-          {products.map((product) => (
-            <Col sm="4">
-              <Card>
-                <CardImg
-                  top
-                  width="100%"
-                  src={product.imgUrl}
-                  alt="Card image cap"
-                />
-                <CardBody>
-                  <CardTitle tag="h5">{product.name}</CardTitle>
-                  <CardSubtitle tag="h6" className="mb-2 text-muted">
-                    Card subtitle
-                  </CardSubtitle>
-                  <CardText>{product.description}</CardText>
-                  <Button>Add to cart</Button>
-                </CardBody>
-              </Card>
-            </Col>
+          {products.map((product, index) => (
+            <div className="Product" key={index}>
+              <Col sm="4">
+                <Card>
+                  <CardImg
+                    top
+                    width="100%"
+                    src={product.imgUrl}
+                    alt="Card image cap"
+                  />
+                  <CardBody>
+                    <CardTitle tag="h5">{product.name}</CardTitle>
+                    <CardSubtitle tag="h6" className="mb-2 text-muted">
+                      Card subtitle
+                    </CardSubtitle>
+                    <CardText>{product.description}</CardText>
+                    <CartContext.Consumer>
+                      {({ addToCart }) => (
+                        <Button onClick={() => addToCart(product)}>
+                          Add to cart
+                        </Button>
+                      )}
+                    </CartContext.Consumer>
+                  </CardBody>
+                </Card>
+              </Col>
+            </div>
           ))}
         </Row>
       </Container>
